@@ -1,4 +1,4 @@
-import SidebarButton from "./sidebar-button";
+import SidebarButton from "./SidebarButton";
 import HomeIcon from "../assets/icons/home.svg?react";
 import TasksIcon from "../assets/icons/tasks.svg?react";
 
