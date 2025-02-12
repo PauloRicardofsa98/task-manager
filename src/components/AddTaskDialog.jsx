@@ -24,8 +24,6 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
     const description = descriptionRef.current.value;
     const time = timeRef.current.value;
 
-    console.log(title, description, time);
-
     if (!title.trim()) {
       newErrors.push({ inputName: "title", message: "O titulo é obrigatório" });
     }
