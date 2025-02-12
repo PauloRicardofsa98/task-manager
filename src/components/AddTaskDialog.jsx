@@ -4,21 +4,25 @@ import PropTypes from "prop-types";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
+import { toast } from "sonner";
 import { v4 } from "uuid";
 
+import { LoaderIcon } from "../assets/icons";
 import Button from "./Button";
 import Input from "./Input";
 import TimeSelect from "./TimeSelect";
 
-const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
+const AddTaskDialog = ({ isOpen, handleClose, onSubmitSuccess }) => {
   const [error, setError] = useState([]);
+  const [addTaskIsLoading, setAddTaskIsLoading] = useState(false);
 
   const nodeRef = useRef();
   const titleRef = useRef();
   const descriptionRef = useRef();
   const timeRef = useRef();
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
+    setAddTaskIsLoading(true);
     const newErrors = [];
 
     const title = titleRef.current.value;
@@ -42,18 +46,32 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
 
     setError(newErrors);
     if (newErrors.length > 0) {
+      setAddTaskIsLoading(false);
       return;
     }
 
-    handleSubmit({
+    const task = {
       id: v4(),
       title,
       description,
       time,
       status: "not_started",
+    };
+    const response = await fetch("http://localhost:3000/tasks", {
+      method: "POST",
+      body: JSON.stringify(task),
     });
 
+    if (!response.ok) {
+      toast.error("Erro ao adicionar tarefa");
+      setAddTaskIsLoading(false);
+      return;
+    }
+
+    onSubmitSuccess(task);
+
     handleClose();
+    setAddTaskIsLoading(false);
   };
 
   const titleError = error.find((err) => err.inputName === "title");
@@ -114,8 +132,12 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                     size="large"
                     className="w-full"
                     onClick={handleSaveClick}
+                    disabled={addTaskIsLoading}
                   >
-                    Adicionar
+                    {addTaskIsLoading && (
+                      <LoaderIcon className="animate-spin" />
+                    )}
+                    Salvar
                   </Button>
                 </div>
               </div>
