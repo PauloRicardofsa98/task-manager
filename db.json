@@ -1,13 +1,6 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Revisar código do projeto",
-      "description": "Verificar se há bugs e melhorias no código do módulo principal.",
-      "time": "morning",
-      "status": "in_progress"
-    },
-    {
       "id": "2",
       "title": "Criar endpoints da API",
       "description": "Desenvolver os endpoints necessários para integração com o frontend.",
