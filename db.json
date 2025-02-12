@@ -8,13 +8,6 @@
       "status": "not_started"
     },
     {
-      "id": "3",
-      "title": "Configurar banco de dados",
-      "description": "Criar tabelas e definir relações no banco de dados.",
-      "time": "morning",
-      "status": "done"
-    },
-    {
       "id": "4",
       "title": "Testar autenticação",
       "description": "Verificar se o login e logout estão funcionando corretamente.",
@@ -27,13 +20,6 @@
       "description": "Adicionar informações sobre novos endpoints e mudanças na API.",
       "time": "afternoon",
       "status": "not_started"
-    },
-    {
-      "id": "6",
-      "title": "Criar layout da página de dashboard",
-      "description": "Desenvolver a estrutura da página principal do sistema.",
-      "time": "morning",
-      "status": "done"
     },
     {
       "id": "7",
@@ -61,13 +47,6 @@
       "title": "Publicar nova versão",
       "description": "Subir a aplicação para produção com as novas funcionalidades.",
       "time": "evening",
-      "status": "not_started"
-    },
-    {
-      "id": "0075d02c-a7af-4d08-be65-889d5dba7b72",
-      "title": "mmm",
-      "description": "mmmm",
-      "time": "morning",
       "status": "not_started"
     }
   ]
