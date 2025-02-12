@@ -30,7 +30,7 @@ const TaskItem = ({ task, handleTaskCheckboxClick, handleTaskDeleteClick }) => {
           />
           {task.status === "done" && <CheckIcon />}
           {task.status === "in_progress" && (
-            <LoaderIcon className="z-10 animate-spin text-white" />
+            <LoaderIcon className="animate-spin text-white" />
           )}
         </label>
         {task.title}
