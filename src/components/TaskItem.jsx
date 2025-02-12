@@ -1,5 +1,4 @@
 import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from "../assets/icons";
-
 import Button from "./Button";
 
 const TaskItem = ({ task, handleTaskCheckboxClick, handleTaskDeleteClick }) => {

@@ -25,7 +25,7 @@ export {
   LoaderIcon,
   MoonIcon,
   SunIcon,
-  TasksIcon,
   Tasks2Icon,
+  TasksIcon,
   TrashIcon,
 };

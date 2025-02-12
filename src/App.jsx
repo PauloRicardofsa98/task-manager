@@ -1,6 +1,7 @@
+import { Toaster } from "sonner";
+
 import SideBar from "./components/Sidebar";
 import Tasks from "./components/Tasks";
-import { Toaster } from "sonner";
 
 const App = () => {
   return (
