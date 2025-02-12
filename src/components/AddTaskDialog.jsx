@@ -42,8 +42,8 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
       newErrors.push({ inputName: "time", message: "O horário é obrigatório" });
     }
 
+    setError(newErrors);
     if (newErrors.length > 0) {
-      setError(newErrors);
       return;
     }
 
