@@ -13,6 +13,7 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("morning");
+  const [error, setError] = useState([]);
 
   const nodeRef = useRef();
 
@@ -25,8 +26,25 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
   }, [isOpen]);
 
   const handleSaveClick = () => {
-    if (!title.trim() || !description.trim() || !time.trim()) {
-      return alert("Preencha todos os campos");
+    const newErrors = [];
+    if (!title.trim()) {
+      newErrors.push({ inputName: "title", message: "O titulo é obrigatório" });
+    }
+
+    if (!description.trim()) {
+      newErrors.push({
+        inputName: "description",
+        message: "A descrição é obrigatória",
+      });
+    }
+
+    if (!time.trim()) {
+      newErrors.push({ inputName: "time", message: "O horário é obrigatório" });
+    }
+
+    if (newErrors.length > 0) {
+      setError(newErrors);
+      return;
     }
 
     handleSubmit({
@@ -39,6 +57,10 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
 
     handleClose();
   };
+
+  const titleError = error.find((err) => err.inputName === "title");
+  const timeError = error.find((err) => err.inputName === "time");
+  const descriptionError = error.find((err) => err.inputName === "description");
 
   return (
     <CSSTransition
@@ -69,11 +91,13 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   placeholder="Insira o título da tarefa"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  errorMessage={titleError?.message}
                 />
 
                 <TimeSelect
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
+                  errorMessage={timeError?.message}
                 />
 
                 <Input
@@ -82,7 +106,9 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   placeholder="Descreva a tarefa"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  errorMessage={descriptionError?.message}
                 />
+
                 <div className="flex gap-3">
                   <Button
                     size="large"
