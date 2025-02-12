@@ -1,5 +1,3 @@
-import { Toaster } from "sonner";
-
 import SideBar from "./components/Sidebar";
 import Tasks from "./components/Tasks";
 
@@ -8,13 +6,6 @@ const App = () => {
     <div className="flex">
       <SideBar />
       <Tasks />
-      <Toaster
-        toastOptions={{
-          style: {
-            color: "#35383E",
-          },
-        }}
-      />
     </div>
   );
 };
