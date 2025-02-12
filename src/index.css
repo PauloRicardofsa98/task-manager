@@ -129,7 +129,7 @@
     font-style: italic;
   }
 
-  body{
-    @apply bg-[#f8f8f8];
+  body {
+    @apply bg-brand-background;
   }
 }
