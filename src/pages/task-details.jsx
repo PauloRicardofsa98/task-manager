@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { ArrowLeftIcon, ChevronRightIcon, TrashIcon } from "../assets/icons";
 import Button from "../components/Button";
@@ -44,12 +44,9 @@ const TaskDetailsPage = () => {
               <ArrowLeftIcon />
             </button>
             <div className="flex items-center gap-1 text-xs">
-              <span
-                className="cursor-pointer text-brand-text-gray"
-                onClick={handleBackClick}
-              >
+              <Link className="cursor-pointer text-brand-text-gray" to="/">
                 Minhas tarefas
-              </span>
+              </Link>
               <ChevronRightIcon className="text-brand-text-gray" />
               <span className="font-semibold text-brand-primary">
                 {task?.title}
