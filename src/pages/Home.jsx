@@ -1,6 +1,6 @@
 import DashboardCards from "../components/DashboardCards";
 import Header from "../components/Header";
-import SideBar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar";
 import TaskItem from "../components/TaskItem";
 import { useGetTasks } from "../hooks/data/use-get-tasks";
 
@@ -8,7 +8,7 @@ const HomePage = () => {
   const { data: tasks } = useGetTasks();
   return (
     <div className="flex">
-      <SideBar />
+      <Sidebar />
       <div className="w-full space-y-6 px-8 py-16">
         <Header subtitle="Dashboard" title="Dashboard" />
         <DashboardCards />

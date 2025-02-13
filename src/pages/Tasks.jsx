@@ -1,10 +1,10 @@
-import SideBar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar";
 import Tasks from "../components/Tasks";
 
 const TasksPage = () => {
   return (
     <div className="flex">
-      <SideBar />
+      <Sidebar />
       <Tasks />
     </div>
   );
