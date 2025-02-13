@@ -11,7 +11,7 @@ const SideBar = () => {
 
         <p>
           Um simples{" "}
-          <span className="text-brand-primary">organizador de tarefas</span>
+          <span className="text-brand-primary">Organizador de tarefas</span>
         </p>
       </div>
 
