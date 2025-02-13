@@ -1,36 +1,28 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from "../assets/icons";
+import { useDeleteTask } from "../hooks/data/use-delete-task";
 import Button from "./Button";
 
 const TaskItem = ({ task, handleTaskCheckboxClick }) => {
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["deleteTask", task.id],
-    mutationFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error("Erro ao deletar tarefa");
-      }
-    },
-    onError: () => {
-      toast.error("Erro ao deletar tarefa");
-    },
-    onSuccess: () => {
-      queryClient.setQueryData("tasks", (oldTasks) =>
-        oldTasks.filter((old) => old.id !== task.id),
-      );
-      toast.success("Tarefa deletada com sucesso");
-    },
-  });
+  const { mutate, isPending } = useDeleteTask(task.id);
 
   const handleDeleteClick = async () => {
-    mutate();
+    mutate(undefined, {
+      onError: () => {
+        toast.error("Erro ao deletar tarefa");
+      },
+      onSuccess: () => {
+        queryClient.setQueryData("tasks", (oldTasks) =>
+          oldTasks.filter((old) => old.id !== task.id),
+        );
+        toast.success("Tarefa deletada com sucesso");
+      },
+    });
   };
 
   const getStatusClasses = () => {

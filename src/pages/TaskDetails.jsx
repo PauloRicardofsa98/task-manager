@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -13,10 +13,11 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import SideBar from "../components/Sidebar";
 import TimeSelect from "../components/TimeSelect";
+import { useDeleteTask } from "../hooks/data/use-delete-task";
+import { useUpdateTask } from "../hooks/data/use-update-task";
 
 const TaskDetailsPage = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { taskId } = useParams();
 
   const {
@@ -39,48 +40,11 @@ const TaskDetailsPage = () => {
     },
   });
 
-  const { mutate: deleteTask, isPending: deleteTaskIsLoading } = useMutation({
-    queryKey: ["deleteTask", taskId],
-    mutationFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "DELETE",
-      });
+  const { mutate: deleteTask, isPending: deleteTaskIsLoading } =
+    useDeleteTask(taskId);
 
-      if (!response.ok) {
-        throw new Error("Erro ao deletar tarefa");
-      }
-
-      const data = response.json();
-      queryClient.setQueryData("tasks", (oldTasks) =>
-        oldTasks.filter((old) => old.id !== taskId),
-      );
-      return data;
-    },
-  });
-
-  const { mutate: updateTask, isPending: updateTaskIsLoading } = useMutation({
-    queryKey: ["updateTask", taskId],
-    mutationFn: async ({ title, description, time }) => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          title: title.trim(),
-          description: description.trim(),
-          time,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao atualizar tarefa");
-      }
-
-      const newTask = await response.json();
-      queryClient.setQueryData("tasks", (oldTasks) =>
-        oldTasks.map((old) => (old.id === taskId ? newTask : old)),
-      );
-      return newTask;
-    },
-  });
+  const { mutate: updateTask, isPending: updateTaskIsLoading } =
+    useUpdateTask(taskId);
 
   const handleBackClick = () => {
     navigate(-1);
