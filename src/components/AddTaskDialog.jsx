@@ -44,6 +44,10 @@ const AddTaskDialog = ({ isOpen, handleClose, onSubmitSuccess }) => {
 
     onSubmitSuccess(task);
 
+    handleCancel();
+  };
+
+  const handleCancel = () => {
     handleClose();
     reset();
   };
@@ -111,7 +115,7 @@ const AddTaskDialog = ({ isOpen, handleClose, onSubmitSuccess }) => {
                     size="large"
                     color="secondary"
                     className="w-full"
-                    onClick={handleClose}
+                    onClick={handleCancel}
                     type="button"
                   >
                     Cancelar
