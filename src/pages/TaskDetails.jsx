@@ -10,7 +10,7 @@ import {
 } from "../assets/icons";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import SideBar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar";
 import TimeSelect from "../components/TimeSelect";
 import { useDeleteTask } from "../hooks/data/use-delete-task";
 import { useGetTask } from "../hooks/data/use-get-task";
@@ -69,7 +69,7 @@ const TaskDetailsPage = () => {
 
   return (
     <div className="flex">
-      <SideBar />
+      <Sidebar />
 
       <div className="w-full space-y-6 px-8 py-16">
         <div className="flex w-full justify-between">

@@ -8,14 +8,13 @@ const Sidebar = () => {
         <h1 className="text-xl font-semibold text-brand-primary">
           Task Manager
         </h1>
-
         <p>
           Um simples{" "}
-          <span className="text-brand-primary">Organizador de tarefas!</span>
+          <span className="text-brand-primary">organizador de tarefas</span>.
         </p>
       </div>
 
-      <div className="flex flex-col p-2">
+      <div className="flex flex-col gap-2 p-2">
         <SidebarButton to="/">
           <HomeIcon />
           Início
