@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -15,20 +15,70 @@ import SideBar from "../components/Sidebar";
 import TimeSelect from "../components/TimeSelect";
 
 const TaskDetailsPage = () => {
-  const { taskId } = useParams();
-  const [task, setTask] = useState(null);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { taskId } = useParams();
 
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     handleSubmit,
     reset,
-  } = useForm({
-    defaultValues: {
-      title: task?.title,
-      description: task?.description,
-      time: task?.time,
+  } = useForm();
+
+  const { data: task } = useQuery({
+    queryKey: ["task", taskId],
+    queryFn: async () => {
+      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+        method: "GET",
+      });
+
+      const data = await response.json();
+      reset(data);
+      return data;
+    },
+  });
+
+  const { mutate: deleteTask, isPending: deleteTaskIsLoading } = useMutation({
+    queryKey: ["deleteTask", taskId],
+    mutationFn: async () => {
+      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao deletar tarefa");
+      }
+
+      const data = response.json();
+      queryClient.setQueryData("tasks", (oldTasks) =>
+        oldTasks.filter((old) => old.id !== taskId),
+      );
+      return data;
+    },
+  });
+
+  const { mutate: updateTask, isPending: updateTaskIsLoading } = useMutation({
+    queryKey: ["updateTask", taskId],
+    mutationFn: async ({ title, description, time }) => {
+      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          title: title.trim(),
+          description: description.trim(),
+          time,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar tarefa");
+      }
+
+      const newTask = await response.json();
+      queryClient.setQueryData("tasks", (oldTasks) =>
+        oldTasks.map((old) => (old.id === taskId ? newTask : old)),
+      );
+      return newTask;
     },
   });
 
@@ -36,55 +86,30 @@ const TaskDetailsPage = () => {
     navigate(-1);
   };
 
-  useEffect(() => {
-    const fetchTask = async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "GET",
-      });
-
-      const task = await response.json();
-      setTask(task);
-      reset(task);
-      console.log(task);
-    };
-
-    fetchTask();
-  }, [taskId, reset]);
-
   const handleSaveClick = async ({ title, description, time }) => {
-    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        title: title.trim(),
-        description: description.trim(),
-        time,
-      }),
-    });
-
-    if (!response.ok) {
-      toast.error("Erro ao atualizar a tarefa");
-
-      return;
-    }
-
-    const newTask = await response.json();
-    setTask(newTask);
-
-    toast.success("Tarefa atualizada com sucesso");
+    updateTask(
+      { title, description, time },
+      {
+        onError: () => {
+          toast.error("Erro ao atualizar a tarefa");
+        },
+        onSuccess: () => {
+          toast.success("Tarefa atualizada com sucesso");
+        },
+      },
+    );
   };
 
   const handleDeleteClick = async () => {
-    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
-      method: "DELETE",
+    deleteTask(undefined, {
+      onError: () => {
+        toast.error("Erro ao deletar tarefa");
+      },
+      onSuccess: () => {
+        toast.success("Tarefa deletada com sucesso");
+        navigate(-1);
+      },
     });
-
-    if (!response.ok) {
-      toast.error("Erro ao deletar a tarefa");
-      return;
-    }
-
-    toast.success("Tarefa deletada com sucesso");
-    navigate(-1);
   };
 
   return (
@@ -163,9 +188,11 @@ const TaskDetailsPage = () => {
               size="large"
               color="primary"
               type="submit"
-              disabled={isSubmitting}
+              disabled={updateTaskIsLoading || deleteTaskIsLoading}
             >
-              {isSubmitting && <LoaderIcon className="animate-spin" />}
+              {(updateTaskIsLoading || deleteTaskIsLoading) && (
+                <LoaderIcon className="animate-spin" />
+              )}
               Salvar
             </Button>
           </div>
