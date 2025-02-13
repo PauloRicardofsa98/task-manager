@@ -44,18 +44,15 @@ const TaskDetailsPage = () => {
     navigate(-1);
   };
 
-  const handleSaveClick = async ({ title, description, time }) => {
-    updateTask(
-      { title, description, time },
-      {
-        onError: () => {
-          toast.error("Erro ao atualizar a tarefa");
-        },
-        onSuccess: () => {
-          toast.success("Tarefa atualizada com sucesso");
-        },
+  const handleSaveClick = async (data) => {
+    updateTask(data, {
+      onError: () => {
+        toast.error("Erro ao atualizar a tarefa");
       },
-    );
+      onSuccess: () => {
+        toast.success("Tarefa atualizada com sucesso");
+      },
+    });
   };
 
   const handleDeleteClick = async () => {
