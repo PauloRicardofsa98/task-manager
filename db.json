@@ -12,7 +12,7 @@
       "title": "Criar endpoints da API a",
       "description": "Desenvolver os endpoints necessários para integração com o frontend.",
       "time": "afternoon",
-      "status": "not_started"
+      "status": "in_progress"
     },
     {
       "id": "3",
@@ -33,7 +33,7 @@
       "title": "Atualizar documentação",
       "description": "Adicionar informações sobre novos endpoints e mudanças na API.",
       "time": "afternoon",
-      "status": "not_started"
+      "status": "in_progress"
     },
     {
       "id": "6",
