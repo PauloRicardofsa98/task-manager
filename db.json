@@ -1,55 +1,6 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Revisar código do projeto",
-      "description": "Verificar se há bugs e melhorias no código do módulo principal.",
-      "time": "morning",
-      "status": "in_progress"
-    },
-    {
-      "id": "2",
-      "title": "Criar endpoints da API a",
-      "description": "Desenvolver os endpoints necessários para integração com o frontend.",
-      "time": "afternoon",
-      "status": "in_progress"
-    },
-    {
-      "id": "3",
-      "title": "Configurar banco de dados",
-      "description": "Criar tabelas e definir relações no banco de dados.",
-      "time": "morning",
-      "status": "done"
-    },
-    {
-      "id": "4",
-      "title": "Testar autenticação",
-      "description": "Verificar se o login e logout estão funcionando corretamente.",
-      "time": "evening",
-      "status": "in_progress"
-    },
-    {
-      "id": "5",
-      "title": "Atualizar documentação",
-      "description": "Adicionar informações sobre novos endpoints e mudanças na API.",
-      "time": "afternoon",
-      "status": "in_progress"
-    },
-    {
-      "id": "6",
-      "title": "Criar layout da página de dashboard",
-      "description": "Desenvolver a estrutura da página principal do sistema.",
-      "time": "morning",
-      "status": "done"
-    },
-    {
-      "id": "7",
-      "title": "Implementar responsividade",
-      "description": "Garantir que o site funcione bem em dispositivos móveis e tablets.",
-      "time": "evening",
-      "status": "not_started"
-    },
-    {
       "id": "8",
       "title": "Corrigir erro no modal de login",
       "description": "Resolver o problema que impede o modal de fechar corretamente.",
