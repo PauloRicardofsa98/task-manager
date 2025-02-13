@@ -1,5 +1,6 @@
 import "./AddTaskDialog.css";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { useRef } from "react";
 import { createPortal } from "react-dom";
@@ -13,7 +14,30 @@ import Button from "./Button";
 import Input from "./Input";
 import TimeSelect from "./TimeSelect";
 
-const AddTaskDialog = ({ isOpen, handleClose, onSubmitSuccess }) => {
+const AddTaskDialog = ({ isOpen, handleClose }) => {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationKey: "addTask",
+    mutationFn: async (task) => {
+      const response = await fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        body: JSON.stringify(task),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao adicionar tarefa");
+      }
+      return response.json();
+    },
+    onError: () => {
+      toast.error("Erro ao adicionar tarefa");
+    },
+    onSuccess: (task) => {
+      queryClient.setQueryData("tasks", (oldTasks) => [...oldTasks, task]);
+      toast.success("Tarefa adicionada com sucesso");
+    },
+  });
+
   const nodeRef = useRef();
 
   const {
@@ -31,20 +55,9 @@ const AddTaskDialog = ({ isOpen, handleClose, onSubmitSuccess }) => {
       time,
       status: "not_started",
     };
-    const response = await fetch("http://localhost:3000/tasks", {
-      method: "POST",
-      body: JSON.stringify(task),
-    });
-
-    if (!response.ok) {
-      toast.error("Erro ao adicionar tarefa");
-
-      return;
-    }
-
-    onSubmitSuccess(task);
-
-    handleCancel();
+    mutate(task);
+    handleClose();
+    reset();
   };
 
   const handleCancel = () => {
