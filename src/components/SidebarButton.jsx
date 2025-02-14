@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 
 const SidebarButton = ({ children, to }) => {
   const sidebar = tv({
-    base: "flex items-center gap-2 rounded-lg px-6 py-3",
+    base: "flex items-center gap-2 rounded-lg px-1 py-1 lg:px-6 lg:py-3",
     variants: {
       color: {
         selected: "bg-brand-primary bg-opacity-15 text-brand-primary",

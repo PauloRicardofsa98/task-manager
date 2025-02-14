@@ -9,10 +9,10 @@ const HomePage = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="w-full space-y-6 px-8 py-16">
+      <div className="w-full space-y-6 px-2 py-16 lg:px-8">
         <Header subtitle="Dashboard" title="Dashboard" />
         <DashboardCards />
-        <div className="grid grid-cols-[1.5fr,1fr] gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.5fr,1fr]">
           <div className="space-y-6 rounded-[10px] bg-white p-6">
             <div>
               <h3 className="text-xl font-semibold">Tarefas</h3>

@@ -13,7 +13,7 @@ const DashboardCards = () => {
     (task) => task.status === "in_progress",
   ).length;
   return (
-    <div className="grid grid-cols-4 gap-9">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-9">
       <DashboardCard
         icon={<Tasks2Icon />}
         mainText={tasks?.length}

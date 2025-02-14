@@ -14,7 +14,7 @@ const Header = ({ subtitle, title }) => {
         </span>
         <h2 className="text-xl font-semibold">{title}</h2>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col items-center gap-3 lg:flex-row">
         <Button color="ghost">
           Limpar Tarefas <TrashIcon />
         </Button>
